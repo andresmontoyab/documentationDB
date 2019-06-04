@@ -1,4 +1,34 @@
-# MONGO DB
+# No Sql DB
+
+### Index
+
+* [NoSql](#NoSql)
+* [Concepts](#Concepts)
+	* [ACID](#ACID)
+	* [Collections](#Schema)
+	* [Documents](#Tables)
+* [MongoDB](#MongoDB)
+
+
+## NoSql
+
+1. There's no schema in the noSql Database.
+2. Super flexible solution.
+3. There are no relations.
+4. Data is typically merged/nested in a few collection.
+5. Can scale in both, horizontal and vertical.
+6. Grear performance for mass read & write request.
+7. Bad performance for Update queries.
+
+## Concepts
+
+## Collections
+
+## Documents
+
+You can add multiples documents with different information or fields in one collection.
+
+# MongoDB
 
 	1. MongoDB es una base de datos orientada a documentos.
 
