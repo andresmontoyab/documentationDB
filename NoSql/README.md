@@ -24,7 +24,11 @@
 
 ## Collections
 
+Agrupaciones de elementos.
+
 ## Documents
+
+Information that I store in the collections, usually the documents have the JSON format.
 
 You can add multiples documents with different information or fields in one collection.
 
@@ -79,7 +83,96 @@ Una vez tengamos corriendo nuestro contenedor docker deberemos ingresar a este p
 
 			1. show collections; --> Muestra todas las collections disponibles en la base de datos.
 
-			2. db.<collection>.find() --> Muestra todos los elementos de una coleccion.
+			2. db.<collection>.insert(info) -> Insertar informacion.
 
-			3. db.<collection>.drop() --> Elimina la coleccion;						
+			3. db.<collection>.find() --> Muestra todos los elementos de una coleccion.
 
+			4. db.<collection>.find({ "_id": ObjectID("1233")}) --> Buscar por id.
+
+			5. db.<collection>.drop() --> Elimina la coleccion;		
+
+			6. db.<collection>.update(search, newValues); --> Update Document			
+
+			7. db.<collection>.remove(search) --> Elimina one document;	
+
+## Identity Mongo
+
+What happend if we insert two documents in the same collection with the same id?
+
+		var id = ObjectID();
+
+		db.personas.insert({
+			_id: id,
+			nombre:"Andres"
+		});
+
+		db.personas.insert({
+			_id: id,
+			nombre:"Felipe"
+		});
+
+In the above code mongo is going to fail, because mongo is not able to insert more than one document with the same "_id".
+
+
+## Example
+
+		var searchOne = {_id: ObjectId("53324f968779e42")};
+		var searchTwo = {_id: ObjectId("53324f978779e43")};
+
+		db.modelosCelulares.update(searchTwo, { 
+			"_id" : ObjectId("53324f968779e42"), 
+			"marca" : "Motorola", 
+			"modelo" : "C115", 
+			"introduccion" : 2006});
+
+		db.modelosCelulares.remove(searchOne,{
+			"_id" : ObjectId("53324f968779e43"), 
+			"marca" : "Nokia", 
+			"modelo" : "5110", 
+			"introduccion" : 1998 
+			})
+
+		db.modelosCelulares.insert({
+			"marca" : "Nokia", 
+			"modelo" : "5110", 
+			"introduccion" : 1998 
+			});
+
+## Searching with Mongo
+
+Search set of information.
+
+		db.personas.find({nombre: 'Andres'});
+
+Search with nested values.
+
+		db.personas.find({'direccion.altura': 400});
+
+With more than one fields.
+
+		db.persona.find({
+			nombre: 'Andres',
+			'direccion.altura':400
+		});
+
+Applying set property
+
+
+		db.modelosCelulares.update({},		
+		{
+			$set: {
+			pantalla: "monocromática",
+			tecnologia:"GSM"
+			}
+		}
+		);
+
+## Complex Search
+
+		db.personas.find({ 'direccion:altura' : {
+			$gt: 400 }});
+
+
+In the following link you can find the list of Query Operator for mongo
+
+https://docs.mongodb.com/manual/reference/operator/query-comparison/
